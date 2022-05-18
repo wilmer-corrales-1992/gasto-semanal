@@ -5,6 +5,8 @@ import {Row, Col, Container} from "reactstrap"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Formulario from "./Formulario"
 import Listado from "./Listado"
+import { validarPresupuesto } from '../helper';
+import ControlPresupuesto from './ControlPresupuesto';
 
 class App extends Component {
 
@@ -12,6 +14,23 @@ class App extends Component {
     gastos: {},
     presupuesto: "",
     restante: ""
+  }
+
+  componentDidMount(){
+    this.obtenerPresupuesto()
+  }
+
+  obtenerPresupuesto = () => {
+    let presupuesto = prompt('Cual es el presupuesto?')
+    let resultado = validarPresupuesto(presupuesto)
+    if(resultado){
+      this.setState({
+        presupuesto: presupuesto,
+        restante: presupuesto
+      })
+    }else{
+      this.obtenerPresupuesto()
+    }
   }
 
   agregarGasto = (gasto) => {
@@ -40,6 +59,7 @@ class App extends Component {
               </Col>
               <Col>
                 <Listado gastos={this.state.gastos}></Listado>
+                <ControlPresupuesto></ControlPresupuesto>
               </Col>
             </Row>
         </div>

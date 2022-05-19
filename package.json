@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "prop-types": "^15.8.1",
     "reactstrap": "^9.0.2",
     "skeleton": "^0.1.2"
   }

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import '../css/index.css';
 import Header from "./Header"
 import {Row, Col, Container} from "reactstrap"
-import 'bootstrap/dist/css/bootstrap.min.css'
 import Formulario from "./Formulario"
 import Listado from "./Listado"
 import { validarPresupuesto } from '../helper';
@@ -40,13 +39,28 @@ class App extends Component {
     // agregar el gasto al state
     gastos[`gasto${Date.now()}`] = gasto
 
-    console.log(gastos)
+    // restar al presupuesto
+    this.restarPresupuesto(gasto.cantidadGasto)
 
     // poner en state
     this.setState({
       gastos
     })
   }
+
+  restarPresupuesto = cantidad => {
+    // leer el gasto
+    let restar = Number(cantidad)
+    // tomar una copia del state actual
+    let restante = this.state.restante
+    // lo restamos
+    restante -= restar
+    // agregamos al nuevo state
+    this.setState({
+      restante
+    })
+  }
+
 
   render(){
     return (
@@ -59,7 +73,11 @@ class App extends Component {
               </Col>
               <Col>
                 <Listado gastos={this.state.gastos}></Listado>
-                <ControlPresupuesto></ControlPresupuesto>
+                <ControlPresupuesto
+                  presupuesto={this.state.presupuesto}
+                  restante={this.state.restante}
+                >
+                </ControlPresupuesto>
               </Col>
             </Row>
         </div>
